@@ -63,3 +63,72 @@ DEBUG_TOOLBAR_PATCH_SETTINGS = False
 # http://django-debug-toolbar.readthedocs.org/en/latest/installation.html
 INTERNAL_IPS = ('127.0.0.1',)
 ########## END TOOLBAR CONFIGURATION
+
+
+# ######## Override Loggin path
+# Override
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        # Log to a text file that can be rotated by logrotate
+        # the log path should be generated before run
+        'logfile': {
+            'class': 'logging.handlers.WatchedFileHandler',
+            'formatter': 'simple',
+            'filename': normpath(join(SITE_ROOT, '..',
+                                      'var', 'log', 'django',
+                                      'spike.log')),
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        # Might as well log any errors anywhere else in Django
+        'django': {
+            'handlers': ['logfile'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        # Your own app - this assumes all your logger names start with "myapp."
+        'spike': {
+            'handlers': ['logfile'],
+            'level': 'WARNING',  # Or maybe INFO or DEBUG
+            'propagate': False
+        },
+        'accblacksmith': {
+            'handlers': ['logfile'],
+            'level': 'WARNING',  # Or maybe INFO or DEBUG
+            'propagate': False
+        },
+        'tinyurl': {
+            'handlers': ['logfile'],
+            'level': 'WARNING',  # Or maybe INFO or DEBUG
+            'propagate': False
+        },
+        'handsetcare': {
+            'handlers': ['logfile'],
+            'level': 'WARNING',  # Or maybe INFO or DEBUG
+            'propagate': False
+        },
+    },
+
+}
