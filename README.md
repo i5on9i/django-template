@@ -7,5 +7,5 @@ settings sources are from : [https://github.com/twoscoops/django-twoscoops-proje
 # Install
 Install all the modules which are needed
 
-  pip install -r requirements/local.txt
+    pip install -r requirements/local.txt
 
