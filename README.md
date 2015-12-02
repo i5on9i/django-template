@@ -9,3 +9,8 @@ Install all the modules which are needed
 
     pip install -r requirements/local.txt
 
+# DB Migration
+DB migration is needed before run server, without migration it is ok to be launched
+
+    manage.py makemigrations --settings=pmodum.settings.local
+    manage.py migrate --settings=pmodum.settings.local
