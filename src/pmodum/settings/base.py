@@ -133,7 +133,7 @@ FIXTURE_DIRS = (
 TEMPLATE_DIRS = (
     normpath(join(SITE_ROOT, 'templates')),
 )
-TEMPLATE = [{
+TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
     'OPTIONS': {
         'loaders': [
