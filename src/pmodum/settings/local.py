@@ -7,22 +7,22 @@ from os.path import join, normpath
 from .base import *
 
 
-########## DEBUG CONFIGURATION
+# DEBUG CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
 TEMPLATE_DEBUG = DEBUG
-########## END DEBUG CONFIGURATION
+# END DEBUG CONFIGURATION
 
 
-########## EMAIL CONFIGURATION
+# EMAIL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-########## END EMAIL CONFIGURATION
+# END EMAIL CONFIGURATION
 
 
-########## DATABASE CONFIGURATION
+# DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     "default": {
@@ -35,21 +35,22 @@ DATABASES = {
     }
 }
 
-########## END DATABASE CONFIGURATION
+# END DATABASE CONFIGURATION
 
 
-########## CACHE CONFIGURATION
+# CACHE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
-########## END CACHE CONFIGURATION
+# END CACHE CONFIGURATION
 
 
-########## TOOLBAR CONFIGURATION
-# See: http://django-debug-toolbar.readthedocs.org/en/latest/installation.html#explicit-setup
+# TOOLBAR CONFIGURATION
+# See:
+# http://django-debug-toolbar.readthedocs.org/en/latest/installation.html#explicit-setup
 INSTALLED_APPS += (
     'debug_toolbar',
 )
@@ -62,7 +63,7 @@ DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 # http://django-debug-toolbar.readthedocs.org/en/latest/installation.html
 INTERNAL_IPS = ('127.0.0.1',)
-########## END TOOLBAR CONFIGURATION
+# END TOOLBAR CONFIGURATION
 
 
 # ######## Override Loggin path
@@ -93,7 +94,7 @@ LOGGING = {
             'formatter': 'simple',
             'filename': normpath(join(SITE_ROOT, '..',
                                       'var', 'log', 'django',
-                                      'spike.log')),
+                                      'myapp.log')),
         },
     },
     'loggers': {
@@ -109,26 +110,12 @@ LOGGING = {
             'propagate': False,
         },
         # Your own app - this assumes all your logger names start with "myapp."
-        'spike': {
-            'handlers': ['logfile'],
-            'level': 'WARNING',  # Or maybe INFO or DEBUG
-            'propagate': False
-        },
-        'accblacksmith': {
-            'handlers': ['logfile'],
-            'level': 'WARNING',  # Or maybe INFO or DEBUG
-            'propagate': False
-        },
-        'tinyurl': {
-            'handlers': ['logfile'],
-            'level': 'WARNING',  # Or maybe INFO or DEBUG
-            'propagate': False
-        },
-        'handsetcare': {
-            'handlers': ['logfile'],
-            'level': 'WARNING',  # Or maybe INFO or DEBUG
-            'propagate': False
-        },
+        # 'myapp': {
+        #     'handlers': ['logfile'],
+        #     'level': 'WARNING',  # Or maybe INFO or DEBUG
+        #     'propagate': False
+        # },
+
     },
 
 }
