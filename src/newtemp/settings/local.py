@@ -93,7 +93,7 @@ LOGGING = {
             'class': 'logging.handlers.WatchedFileHandler',
             'formatter': 'simple',
             'filename': normpath(join(SITE_ROOT, '..',
-                                      'var', 'log',  'dango',
+                                      'var', 'log',  'django',
                                       'myapp.log')),
         },
     },
