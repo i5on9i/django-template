@@ -6,8 +6,11 @@ from sys import path
 
 
 ########## PATH CONFIGURATION
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = dirname(dirname(abspath(__file__)))
+
 # Absolute filesystem path to the Django project directory:
-DJANGO_ROOT = dirname(dirname(abspath(__file__)))
+DJANGO_ROOT = BASE_DIR
 
 # Absolute filesystem path to the top-level project folder:
 SITE_ROOT = dirname(DJANGO_ROOT)
@@ -58,7 +61,7 @@ DATABASES = {
 
 ########## GENERAL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = 'UTC'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = 'en-us'
@@ -115,7 +118,7 @@ SECRET_KEY = r"{{ secret_key }}"
 
 ########## SITE CONFIGURATION
 # Hosts/domain names that are valid for this site
-# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
 ########## END SITE CONFIGURATION
 
@@ -129,7 +132,7 @@ FIXTURE_DIRS = (
 
 
 # #### TEMPLATE CONFIGURATION
-# See : https://docs.djangoproject.com/en/1.8/ref/settings/#templates
+# See : https://docs.djangoproject.com/en/dev/topics/templates/
 TEMPLATE_DIRS = (
     normpath(join(SITE_ROOT, 'templates')),
 )
@@ -142,16 +145,17 @@ TEMPLATES = [{
                 'django.template.loaders.app_directories.Loader',
             ]),
         ],
-        # see : https://docs.djangoproject.com/en/1.8/ref/templates/upgrading/
+        # see : https://docs.djangoproject.com/en/dev/ref/templates/api/#built-in-template-context-processors
         'context_processors': [
-            'django.contrib.auth.context_processors.auth',
             'django.template.context_processors.debug',
+            'django.template.context_processors.request',
+            'django.contrib.auth.context_processors.auth',
+            'django.contrib.messages.context_processors.messages',
+
             'django.template.context_processors.i18n',
             'django.template.context_processors.media',
             'django.template.context_processors.static',
             'django.template.context_processors.tz',
-            'django.contrib.messages.context_processors.messages',
-            'django.template.context_processors.request',
         ]
     },
 
@@ -163,15 +167,16 @@ TEMPLATES = [{
 
 ########## MIDDLEWARE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#middleware-classes
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     # Default Django middleware.
-    'django.middleware.common.CommonMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+]
 ########## END MIDDLEWARE CONFIGURATION
 
 
@@ -182,12 +187,11 @@ ROOT_URLCONF = '%s.urls' % SITE_NAME
 
 
 ########## APP CONFIGURATION
-DJANGO_APPS = (
+DJANGO_APPS = [
     # Default Django apps:
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
@@ -197,11 +201,11 @@ DJANGO_APPS = (
     # Admin panel and documentation:
     'django.contrib.admin',
     # 'django.contrib.admindocs',
-)
+]
 
 # Apps specific for this project go here.
-LOCAL_APPS = (
-)
+LOCAL_APPS = [
+]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
@@ -266,3 +270,23 @@ LOGGING = {
 WSGI_APPLICATION = '%s.wsgi.application' % SITE_NAME
 ########## END WSGI CONFIGURATION
 
+
+########## AUTH_PASSWORD_VALIDATORS CONFIGURATION
+# Password validation
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+########## END WSGI CONFIGURATION
