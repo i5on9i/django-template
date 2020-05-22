@@ -24,5 +24,5 @@ urlpatterns = [
 if settings.local.DEBUG:
     import debug_toolbar
     urlpatterns += patterns('',
-                            url(r'^__debug__/', include(debug_toolbar.urls)),
+                            url('^__debug__/', include(debug_toolbar.urls)),
                             )
