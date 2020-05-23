@@ -26,12 +26,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "mydb",
-        "USER": "test",
-        "PASSWORD": "test",
-        "HOST": "localhost",
-        "PORT": "",
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': join(BASE_DIR, 'db.sqlite3'),
+        # "ENGINE": "django.db.backends.postgresql_psycopg2",
+        # "NAME": "mydb",
+        # "USER": "test",
+        # "PASSWORD": "test",
+        # "HOST": "localhost",
+        # "PORT": "",
     }
 }
 
@@ -90,7 +92,9 @@ LOGGING = {
         },
         # Log to a text file that can be rotated by logrotate
         # the log path should be generated before run
-        'logfile': {
+        # 
+        # https://justinmontgomery.com/rotating-logs-with-multiple-workers-in-django
+        'file': {
             'class': 'logging.handlers.WatchedFileHandler',
             'formatter': 'simple',
             'filename': normpath(join(SITE_ROOT, '..',
@@ -106,7 +110,7 @@ LOGGING = {
         },
         # Might as well log any errors anywhere else in Django
         'django': {
-            'handlers': ['logfile'],
+            'handlers': ['file'],
             'level': 'ERROR',
             'propagate': False,
         },
